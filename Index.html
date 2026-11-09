@@ -1,1 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Starline Social</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://unpkg.com/peerjs@1.5.1/dist/peerjs.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <section id="lobbyScreen" class="panel active">
+        <div class="brand-header">
+          <div class="brand-badge">✦</div>
+          <div>
+            <h1>Starline Social</h1>
+            <p>Social deduction for space crews</p>
+          </div>
+        </div>
 
+        <div class="setup-grid">
+          <div class="card left-card">
+            <h2>Room</h2>
+            <div class="host-join-row">
+              <button id="createRoomBtn" class="primary">Create Room</button>
+              <button id="quickPlayBtn" class="secondary">Quick Play</button>
+            </div>
+
+            <div class="field-group inline-room">
+              <input id="roomCodeInput" maxlength="6" placeholder="Enter room code" />
+              <button id="joinRoomBtn" class="primary">Join</button>
+            </div>
+
+            <div id="roomInfo" class="room-info hidden">
+              <span>Room Code</span>
+              <strong id="roomCodeDisplay">-</strong>
+              <button id="copyCodeBtn" class="small">Copy</button>
+            </div>
+
+            <div class="player-list-wrap">
+              <h3>Lobby</h3>
+              <ul id="playerList" class="player-list"></ul>
+            </div>
+          </div>
+
+          <div class="card right-card">
+            <h2>Game Setup</h2>
+
+            <div class="settings-grid">
+              <label>
+                <span>Map</span>
+                <select id="mapSelect">
+                  <option value="skeld">The Skeld</option>
+                  <option value="mira-hq">Mira HQ</option>
+                  <option value="polus">Polus</option>
+                  <option value="airship">Airship</option>
+                </select>
+              </label>
+
+              <label>
+                <span>Total Players</span>
+                <input id="totalPlayers" type="range" min="4" max="15" value="8" />
+                <div class="range-value"><span id="totalPlayersValue">8</span></div>
+              </label>
+
+              <label>
+                <span>Impostors</span>
+                <input id="impostorCount" type="range" min="1" max="3" value="2" />
+                <div class="range-value"><span id="impostorCountValue">2</span></div>
+              </label>
+
+              <label>
+                <span>AI Players</span>
+                <input id="aiPlayers" type="range" min="0" max="10" value="3" />
+                <div class="range-value"><span id="aiPlayersValue">3</span></div>
+              </label>
+
+              <label class="checkbox-row">
+                <input id="autoFillAI" type="checkbox" checked />
+                <span>Auto-fill empty slots with AI</span>
+              </label>
+
+              <label class="checkbox-row">
+                <input id="aiCanBeImpostor" type="checkbox" checked />
+                <span>AI can be impostors</span>
+              </label>
+            </div>
+
+            <div class="settings-actions">
+              <button id="addAIBtn" class="secondary">Add AI</button>
+              <button id="removeAIBtn" class="secondary">Remove AI</button>
+              <button id="startGameBtn" class="primary">Start Game</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="gameScreen" class="panel hidden">
+        <div id="gameHud" class="hud">
+          <div class="hud-left">
+            <div id="roleBadge" class="role-badge"></div>
+            <div>
+              <strong id="currentMapLabel">The Skeld</strong>
+              <div id="taskProgress">Tasks: 0/0</div>
+            </div>
+          </div>
+          <div class="hud-mid">
+            <button id="reportButton" class="small primary">Report Body</button>
+            <button id="ejectButton" class="small secondary">Emergency Meeting</button>
+            <button id="taskButton" class="small secondary">Complete Task</button>
+          </div>
+          <div class="hud-right">
+            <div id="statusText">Waiting for players...</div>
+            <div id="timerText">Time: 0</div>
+          </div>
+        </div>
+
+        <div class="game-shell">
+          <canvas id="gameCanvas" width="980" height="640"></canvas>
+          <div id="meetingOverlay" class="overlay hidden">
+            <div class="meeting-card">
+              <h2>Emergency Meeting</h2>
+              <div id="meetingLog" class="meeting-log"></div>
+              <div id="votePanel" class="vote-panel hidden"></div>
+              <button id="closeMeetingBtn" class="primary hidden">Close</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
